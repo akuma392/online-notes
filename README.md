@@ -1,70 +1,135 @@
-# Getting Started with Create React App
+# QuickBin
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+QuickBin is a React-powered anonymous note sharing app for creating rich-text notes and source-code notes, then sharing them through a unique public URL.
 
-## Available Scripts
+The current project uses Create React App, React Router, Tailwind CSS, React Quill, CodeMirror, Supabase, and Lucide icons.
 
-In the project directory, you can run:
+## Project goal
 
-### `npm start`
+QuickBin allows a user to:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- write a rich-text note or a code note,
+- switch between rich-text and code editors,
+- choose a language for code notes,
+- save the note to Supabase,
+- copy the generated share link,
+- open a saved note from the unique URL,
+- browse a recent list of the last five notes created in the browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- Rich text writer with React Quill.
+- Code editor using CodeMirror with JavaScript, Python, and HTML support.
+- Light and dark visual theme toggle driven by Tailwind class mode.
+- Recent note modal for the last five saved note URLs.
+- Shareable note route using a unique note ID in the URL path.
+- Supabase database insertion and query workflow.
+- Browser local storage history via `recentNotes.js`.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tech stack
 
-### `npm run build`
+- React 19
+- Create React App
+- React Router DOM
+- Supabase JavaScript client
+- React Quill
+- CodeMirror
+- Tailwind CSS
+- Lucide React
+- nanoid
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Repository structure
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```text
+src/
+  App.js                  Main app layout and theme toggle
+  index.js                React entry point
+  index.css               Global Tailwind and Quill editor styling
+  supabase.js             Supabase client configuration
+  components/
+    CreateNote.js         Create and share a note UI
+    ViewNote.js           Fetch and display a stored note
+    RecentNotesModal.js   Recent note modal component
+  constants/
+    noteConstants.js      Reusable Quill config and slug helper
+  utils/
+    recentNotes.js        Local history APIs for recent notes
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Environment variables
 
-### `npm run eject`
+Create a local `.env` file from the example profile:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```sh
+cp .env.example .env
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Use values such as:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```env
+REACT_APP_SUPABASE_URL=https://your-project-url.supabase.co
+REACT_APP_SUPABASE_PUBLISHABLE_KEY=your-anon-key
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The frontend app reads the Supabase client from `src/supabase.js`.
 
-## Learn More
+## Local development
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Install dependencies:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```sh
+npm install
+```
 
-### Code Splitting
+Start the local development server:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```sh
+npm start
+```
 
-### Analyzing the Bundle Size
+Open the project locally at:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```text
+http://localhost:3000
+```
 
-### Making a Progressive Web App
+## Production build
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Create a production build:
 
-### Advanced Configuration
+```sh
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Available project scripts
 
-### Deployment
+```sh
+npm start
+npm test
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- `npm start` launches the CRA development server.
+- `npm test` runs the unit test suite.
+- `npm run build` creates the production build folder.
 
-### `npm run build` fails to minify
+## Supabase data model
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The app expects a Supabase table named `notes` with these fields:
+
+- `id` primary key or unique identifier
+- `content` rich text or code text
+- `type` either `text` or `code`
+- `language` such as `javascript`, `python`, or `html`
+
+The app writes new records using `supabase.from('notes').insert(...)` and reads one record with `supabase.from('notes').select('*').eq('id', id).single()`.
+
+## Implementation notes
+
+- Theme state is stored in `localStorage` using the key `app-theme`.
+- The recent-note list is stored in browser local storage with the key `quickbin_recent_notes`.
+- The project uses Tailwind dark mode with class-based toggling from the HTML root.
+
+## License
+
+This project is intended for learning and local development use.

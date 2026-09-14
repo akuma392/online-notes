@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "QuickBin",
+  "name": "QuickBin — Share Notes",
+  "description": "QuickBin lets you create rich-text and code notes and share them through a unique URL.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#0f172a",
   "background_color": "#ffffff"
 }

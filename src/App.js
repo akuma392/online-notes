@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import CreateNote from './components/CreateNote';
 import ViewNote from './components/ViewNote';
+import NotFound from './components/NotFound'; // <-- Import component
 import { Sun, Moon } from 'lucide-react';
 
 export default function App() {
@@ -52,6 +53,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<CreateNote theme={theme} />} />
             <Route path="/:id" element={<ViewNote theme={theme} />} />
+            {/* Handles all undefined URLs */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
       </div>

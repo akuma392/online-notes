@@ -1,13 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  @apply bg-slate-950 text-slate-100 min-h-screen antialiased;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Quill Editor Styles */
+.quill-custom-container .ql-toolbar {
+  @apply border-0 border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 rounded-t-lg transition-colors;
+}
+
+.quill-custom-container .ql-container {
+  @apply border-0 min-h-[350px] text-base text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-950 rounded-b-lg font-sans;
+}
+
+.dark .ql-snow .ql-stroke {
+  stroke: #94a3b8 !important;
+}
+
+.dark .ql-snow .ql-fill {
+  fill: #94a3b8 !important;
+}
+
+.dark .ql-snow .ql-picker {
+  color: #94a3b8 !important;
+}
+
+.dark .ql-snow .ql-picker-options {
+  background-color: #0f172a !important;
+  border-color: #1e293b !important;
 }
